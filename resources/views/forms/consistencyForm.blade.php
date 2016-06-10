@@ -1,36 +1,98 @@
 @extends('core')
 @section('content')
     <div class="blog-post">
-        <h2 class="blog-post-title">Hello World!</h2>
-        <p class="blog-post-meta">January 1, 2014 by <a href="#">Mark</a></p>
+        <h2>Privacy Policy Consistency Checker</h2>
 
-        <p>This blog post shows a few different types of content that's supported and styled with Bootstrap. Basic typography, images, and code are all supported.</p>
+        <p>Use the form below to upload your Android application along with the text in the corresponding privacy policy
+            to check for consistency. Once the analysis is complete, you will receive an email with the results.</p>
         <hr>
-        <p>Cum sociis natoque penatibus et magnis <a href="#">dis parturient montes</a>, nascetur ridiculus mus. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Sed posuere consectetur est at lobortis. Cras mattis consectetur purus sit amet fermentum.</p>
-        <blockquote>
-            <p>Curabitur blandit tempus porttitor. <strong>Nullam quis risus eget urna mollis</strong> ornare vel eu leo. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-        </blockquote>
-        <p>Etiam porta <em>sem malesuada magna</em> mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.</p>
-        <h2>Heading</h2>
-        <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>
-        <h3>Sub-heading</h3>
-        <p>Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
-        <pre><code>Example code block</code></pre>
-        <p>Aenean lacinia bibendum nulla sed consectetur. Etiam porta sem malesuada magna mollis euismod. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa.</p>
-        <h3>Sub-heading</h3>
-        <p>Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aenean lacinia bibendum nulla sed consectetur. Etiam porta sem malesuada magna mollis euismod. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-        <ul>
-            <li>Praesent commodo cursus magna, vel scelerisque nisl consectetur et.</li>
-            <li>Donec id elit non mi porta gravida at eget metus.</li>
-            <li>Nulla vitae elit libero, a pharetra augue.</li>
-        </ul>
-        <p>Donec ullamcorper nulla non metus auctor fringilla. Nulla vitae elit libero, a pharetra augue.</p>
-        <ol>
-            <li>Vestibulum id ligula porta felis euismod semper.</li>
-            <li>Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</li>
-            <li>Maecenas sed diam eget risus varius blandit sit amet non magna.</li>
-        </ol>
-        <p>Cras mattis consectetur purus sit amet fermentum. Sed posuere consectetur est at lobortis.</p>
+
+        @if (count($errors) > 0)
+            <div class="alert alert-danger">
+                <strong>Whoops!</strong> There were some problems with your input.
+                <br/>
+                <br/>
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+    <!-- form start -->
+
+        <div class="box-body">
+            @if(isset($comment))
+                <div class="alert alert-warning">
+                    <strong>The following must be addressed:</strong>
+
+                    <p>
+                        {!! $comment->comment!!}
+                    </p>
+                </div>
+            @endif
+            {!! Form::open(array('url' => '/consistencyCheck', 'autocomplete' => "off", 'files' => true)) !!}
+
+            <div class="form-group {!! Session::has('errors') && Session::get('errors')->has('email') ? "has-error" : "" !!}">
+                <label class="col-md-4 control-label">Email Address:</label>
+
+                <div class="input-group">
+                    <input type="email" class="form-control" name="email"
+                           id="email"
+                           value="">
+                </div>
+            </div>
+
+            <div class="form-group {!! Session::has('errors') && Session::get('errors')->has('file') ? "has-error" : "" !!}">
+                <label class="col-md-4 control-label">APK File:</label>
+                <div class="input-group">
+                    <input type="file" class="form-control" name="file"
+                           id="file">
+                </div>
+            </div>
+
+            <div class="form-group {!! Session::has('errors') && Session::get('errors')->has('policy') ? "has-error" : "" !!}">
+                <label class="col-md-4 control-label">Privacy Policy:</label>
+                <div class="input-group">
+                    <textarea rows="10" cols="50" class="form-control" name="policy"
+                              id="policy"></textarea>
+                </div>
+            </div>
+
+        </div>
+        <div class="box-footer">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+        {!! Form::close() !!}
+
     </div><!-- /.blog-post -->
-    @stop()
+
+    @if(!isset($success))
+        <div id="successModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Success!</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>Your files have been submitted for analysis. You will receive an email when it is complete.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    <script type="text/javascript">
+        $(window).load(function(){
+            $('#successModal').modal('show');
+        });
+    </script>
+    @endif
+
+@stop()
 
