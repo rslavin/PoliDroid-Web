@@ -12,3 +12,4 @@
 */
 
 Route::get('/', 'AnalysisController@getConsistencyForm');
+Route::post('pvdetector', 'AnalysisController@postconsistencyForm');

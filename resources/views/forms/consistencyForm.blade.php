@@ -31,7 +31,7 @@
                     </p>
                 </div>
             @endif
-            {!! Form::open(array('url' => '/consistencyCheck', 'autocomplete' => "off", 'files' => true)) !!}
+            {!! Form::open(array('url' => '/pvdetector', 'autocomplete' => "off", 'files' => true)) !!}
 
             <div class="form-group {!! Session::has('errors') && Session::get('errors')->has('email') ? "has-error" : "" !!}">
                 <label class="col-md-4 control-label">Email Address:</label>
@@ -46,7 +46,7 @@
             <div class="form-group {!! Session::has('errors') && Session::get('errors')->has('file') ? "has-error" : "" !!}">
                 <label class="col-md-4 control-label">APK File:</label>
                 <div class="input-group">
-                    <input type="file" class="form-control" name="file"
+                    <input type="file" class="form-control" name="apk_file"
                            id="file">
                 </div>
             </div>
@@ -67,7 +67,7 @@
 
     </div><!-- /.blog-post -->
 
-    @if(!isset($success))
+    @if(session('success'))
         <div id="successModal" class="modal fade" role="dialog">
             <div class="modal-dialog">
 

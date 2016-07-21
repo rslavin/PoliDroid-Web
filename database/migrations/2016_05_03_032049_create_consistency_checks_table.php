@@ -17,7 +17,9 @@ class CreateConsistencyChecksTable extends Migration
             $table->timestamps();
             $table->string('email');
             $table->mediumText('policy');
+            $table->mediumText('results');
             $table->boolean('is_complete')->default(0);
+            $table->boolean('has_started_scan')->default(0);
             $table->boolean('is_consistent')->default(0);
         });
     }
