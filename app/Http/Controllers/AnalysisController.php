@@ -87,8 +87,11 @@ class AnalysisController extends Controller {
         if ($apkFiles) {
             $path = ApkFile::getRootPath() . "out";
             $files = \File::files($path);
-        } else
+            \Log::info($path);
+        } else {
+            \Log::info("else");
             return;
+        }
 
         foreach ($apkFiles as $apkFile) {
             foreach ($files as $file) {
