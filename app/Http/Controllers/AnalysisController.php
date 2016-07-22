@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Yaml\Tests\A;
 
 class AnalysisController extends Controller {
-    public static $flowdroidDir = "/usr/local/bin/FlowDroid";
+    public static $flowdroidDir = "/opt/FlowDroid";
 
     public function getConsistencyForm() {
         return view('forms.consistencyForm');
@@ -40,6 +40,8 @@ class AnalysisController extends Controller {
      * Looks for a ConsistencyCheck that has not been analyzed. If found, starts analysis.
      */
     public static function checkForJob() {
+        // TODO make sure there are no jobs running (has_started == 1 and is_complete == 0)
+        // TODO may need to add a timeout to the exec somehow.
         if ($check = ConsistencyCheck::where('has_started_scan', '=', 0)->first())
             AnalysisController::doJob($check);
     }
@@ -80,7 +82,7 @@ class AnalysisController extends Controller {
         // look for an ApkFile that needs to be analyzed
         $apkFiles = ApkFile::whereHas('consistencyCheck', function ($subQuery) {
             $subQuery->where('is_complete', '=', 0)
-            ->where('has_started_scan', '=', 1);
+                ->where('has_started_scan', '=', 1);
         })->get();
         if ($apkFiles) {
             $path = ApkFile::getRootPath() . "out";
@@ -100,7 +102,11 @@ class AnalysisController extends Controller {
                     $consistency->is_complete = 1;
                     // TODO add consistent flag
                     $consistency->save();
-                    // TODO email user results, maybe parse them first
+                    // TODO parse results
+                    \Mail::send('emails.pvResults', ['filename' => $apkFile->original_filename, 'results' => $consistency->results], function ($m) use ($consistency){
+                        $m->from('donotreply@polidroid.org', 'PoliDroid');
+                        $m->to($consistency->email)->subject('PVDetector Results');
+                    });
                     // remove the file
 //                  \File::delete($fileWithPath);
                     break;
@@ -109,6 +115,7 @@ class AnalysisController extends Controller {
 
         }
     }
+
 
     /**
      * Runs FlowDroid on ConsistencyCheck object.
