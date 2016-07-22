@@ -1,7 +1,7 @@
 @extends('core')
 @section('content')
     <div class="blog-post">
-        <h2>Privacy Policy Consistency Checker</h2>
+        <h2>PVDetector</h2>
 
         <p>Use the form below to upload your Android application along with the text in the corresponding privacy policy
             to check for consistency. Once the analysis is complete, you will receive an email with the results.</p>

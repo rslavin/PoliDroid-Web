@@ -15,7 +15,7 @@ class AnalysisController extends Controller {
     public static $flowdroidDir = "/opt/FlowDroid";
 
     public function getConsistencyForm() {
-        return view('forms.consistencyForm');
+        return view('tools.pvDetectorForm')->with('title', 'PVDetector');
     }
 
     public function postConsistencyForm(Request $request) {
@@ -131,5 +131,9 @@ class AnalysisController extends Controller {
             AnalysisController::$flowdroidDir . "android.jar --nostatic --aliasflowins --layoutmode none > " . $rootPath . "out/$filename 2>&1");
         $check->has_started_scan = 1;
         $check->save();
+    }
+    
+    public function getSourceAnalyzer(){
+        return view('tools.sourceAnalyzer')->with('title', 'Source Code Analyzer');
     }
 }

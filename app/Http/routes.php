@@ -11,11 +11,8 @@
 |
 */
 
-Route::get('/', 'AnalysisController@getConsistencyForm');
+Route::get('/', 'HomeController@getIndex');
+Route::get('pvdetector', 'AnalysisController@getConsistencyForm');
 Route::post('pvdetector', 'AnalysisController@postconsistencyForm');
-//Route::get('test', function(){
-//   Mail::send('emails.test', ['test' => 'test2'], function($m){
-//       $m->from('donotreply2@polidroid.org', 'PoliDroid2');
-//       $m->to('rocky.slavin@gmail.com')->subject('Test');
-//   });
-//});
+Route::get('source-analyzer', 'AnalysisController@getSourceAnalyzer');
+Route::get('publications', 'HomeController@getPublications');
