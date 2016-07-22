@@ -3,7 +3,7 @@
     <div class="blog-post">
         <h2>PVDetector</h2>
 
-        <p>Use the form below to upload your Android application along with the text in the corresponding privacy policy
+        <p>Use the form below to upload your Android application along with the text of the corresponding privacy policy
             to check for consistency. Once the analysis is complete, you will receive an email with the results.</p>
         <hr>
 
@@ -78,7 +78,9 @@
                         <h4 class="modal-title">Success!</h4>
                     </div>
                     <div class="modal-body">
-                        <p>Your files have been submitted for analysis. You will receive an email when it is complete.</p>
+                        <p>Your files have been submitted for analysis. You will receive an email when it is complete.
+                        Please be patient as the analysis can take many hours depending on the size of the application
+                        and the existing queue.</p>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

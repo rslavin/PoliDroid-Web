@@ -33,7 +33,7 @@ class AnalysisController extends Controller {
         $consistency->apk_file_id = $apk->id;
         $consistency->save();
 
-        return redirect("/")->with('success', true);
+        return redirect("pvdetector")->with('success', true);
     }
 
     /**
