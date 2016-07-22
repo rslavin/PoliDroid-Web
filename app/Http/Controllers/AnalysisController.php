@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Yaml\Tests\A;
 
@@ -87,11 +88,8 @@ class AnalysisController extends Controller {
         if ($apkFiles) {
             $path = ApkFile::getRootPath() . "out";
             $files = \File::files($path);
-            \Log::info($path);
-        } else {
-            \Log::info("else");
+        } else
             return;
-        }
 
         foreach ($apkFiles as $apkFile) {
             foreach ($files as $file) {
@@ -129,6 +127,10 @@ class AnalysisController extends Controller {
         $filename = $check->apkFile->filename;
 
         exec("java -Xms65536m -Xmx196608m  -cp " .
+            AnalysisController::$flowdroidDir . "soot-trunk.jar:soot-infoflow.jar:soot-infoflow-android.jar:slf4j-api-1.7.5.jar:axml-2.0.jar " .
+            AnalysisController::$flowdroidDir . "soot.jimple.infoflow.android.TestApps.Test " . $rootPath . "/" . $filename .
+            AnalysisController::$flowdroidDir . "android.jar --nostatic --aliasflowins --layoutmode none > " . $rootPath . "out/$filename 2>&1");
+        \Log::info("java -Xms65536m -Xmx196608m  -cp " .
             AnalysisController::$flowdroidDir . "soot-trunk.jar:soot-infoflow.jar:soot-infoflow-android.jar:slf4j-api-1.7.5.jar:axml-2.0.jar " .
             AnalysisController::$flowdroidDir . "soot.jimple.infoflow.android.TestApps.Test " . $rootPath . "/" . $filename .
             AnalysisController::$flowdroidDir . "android.jar --nostatic --aliasflowins --layoutmode none > " . $rootPath . "out/$filename 2>&1");
