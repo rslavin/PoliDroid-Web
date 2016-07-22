@@ -27,7 +27,7 @@ class Kernel extends ConsoleKernel {
         $schedule->call(function () {
             AnalysisController::checkForFinishedJobs();
             AnalysisController::checkForJob();
-        })->everyThirtyMinutes();
+        })->everyTenMinutes();
 
     }
 }
