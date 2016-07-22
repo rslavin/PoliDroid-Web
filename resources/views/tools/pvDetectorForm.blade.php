@@ -32,6 +32,7 @@
                 </div>
             @endif
             {!! Form::open(array('url' => '/pvdetector', 'autocomplete' => "off", 'files' => true)) !!}
+                <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
             <div class="form-group {!! Session::has('errors') && Session::get('errors')->has('email') ? "has-error" : "" !!}">
                 <label class="col-md-4 control-label">Email Address:</label>
