@@ -14,6 +14,10 @@ use Symfony\Component\Yaml\Tests\A;
 
 class AnalysisController extends Controller {
     public static $flowdroidDir = "/opt/FlowDroid";
+    public static $pvDir = "/opt/PVDetector";
+    public static $pvJar = "PrivacyViolationDetection.jar";
+    public static $owlFile = "ontology.owl";
+    public static $mappingFile = "mappings.csv";
 
     public function getConsistencyForm() {
         return view('tools.pvDetectorForm')->with('title', 'PVDetector');
@@ -100,17 +104,18 @@ class AnalysisController extends Controller {
 
                 // find file
                 if (!strcmp($filename, $apkFile->filename)) {
-                    $fp = fopen($path . "/". $filename, "r");
-                    if(flock($fp, LOCK_EX)) { // check if the file is still open by flowdroid
+                    $fp = fopen($path . "/" . $filename, "r");
+                    if (flock($fp, LOCK_EX)) { // check if the file is still open by flowdroid
                         $fileWithPath = "$path/$filename";
                         $consistency = $apkFile->consistencyCheck;
-                        // TODO change this so that it calls PVDetector and saves the results to $consistency
-                        // $results = AnalysisController::doPVDetect();
-                        $consistency->results = file_get_contents($fileWithPath);
+                        // run detection
+                        $results = AnalysisController::pvDetect($consistency->policyFile->getPath(), ApkFile::getOutPath() . $consistency->apkFile->filename);
+//                        $consistency->results = file_get_contents($fileWithPath);
+                        $consistency->results = $results;
+                        if($results === "No violations detected")
+                            $consistency->is_consistent = 1;
                         $consistency->is_complete = 1;
-                        // TODO add consistent flag
                         $consistency->save();
-                        // TODO parse results
                         \Mail::send('emails.pvResults', ['filename' => $apkFile->original_filename, 'results' => $consistency->results], function ($m) use ($consistency) {
                             $m->from('donotreply@polidroid.org', 'PoliDroid');
                             $m->to($consistency->email)->subject('PVDetector Results');
@@ -142,8 +147,17 @@ class AnalysisController extends Controller {
         $check->has_started_scan = 1;
         $check->save();
     }
-    
-    public function getSourceAnalyzer(){
+
+    public function getSourceAnalyzer() {
         return view('tools.sourceAnalyzer')->with('title', 'Source Code Analyzer');
+    }
+
+    private static function pvDetect($policyFile, $flowDroidOut) {
+        $pvRoot = AnalysisController::$pvDir;
+        $pvDetector = AnalysisController::$pvJar;
+        $owl = AnalysisController::$owlFile;
+        $mapping = AnalysisController::$mappingFile;
+
+        return exec("cd $pvRoot && java -jar $pvDetector $owl $mapping $policyFile $flowDroidOut");
     }
 }

@@ -29,6 +29,10 @@ class ApkFile extends Model
         return "";
     }
 
+    public function getPath(){
+        return PolicyFile::getRootPath() . $this->filename;
+    }
+
     public static function getOutPath()
     {
         if (!strcmp(ApkFile::$storageDriver, "local")) {

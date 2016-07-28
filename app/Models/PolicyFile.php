@@ -27,6 +27,10 @@ class PolicyFile extends Model
         return "";
     }
 
+    public function getPath(){
+        return PolicyFile::getRootPath() . $this->filename;
+    }
+
     public static function store($policyText)
     {
 
