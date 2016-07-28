@@ -2,10 +2,10 @@
 <body>
 
 <p>Your analysis for {{$filename}} is complete. Your results are below.</p>
-<hr />
+<hr/>
 
-<p>
+    <pre>
     {!!$results!!}
-</p>
+    </pre>
 </body>
 </html>

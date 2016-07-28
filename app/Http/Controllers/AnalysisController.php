@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\ApkFile;
 use App\Models\ConsistencyCheck;
+use App\Models\PolicyFile;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -26,11 +27,12 @@ class AnalysisController extends Controller {
         ]);
 
         $apk = ApkFile::store(Input::file('apk_file'));
+        $policy = PolicyFile::store(Input::get('policy'));
 
         $consistency = new ConsistencyCheck();
         $consistency->email = Input::get('email');
         // TODO policy needs to be stored as a file because of PVDetector program
-        $consistency->policy = Input::get('policy');
+        $consistency->policy_file_id = $policy->id;
         $consistency->apk_file_id = $apk->id;
         $consistency->save();
 
@@ -97,7 +99,7 @@ class AnalysisController extends Controller {
                 $filename = "$fileInfo[filename].$fileInfo[extension]";
 
                 // find file
-                if (!strcmp($filename, $apkFile->filename)) { // TODO also check if the file is no longer open for writing
+                if (!strcmp($filename, $apkFile->filename)) {
                     $fp = fopen($path . "/". $filename, "r");
                     if(flock($fp, LOCK_EX)) { // check if the file is still open by flowdroid
                         // TODO change this so that it calls PVDetector and saves the results to $consistency
