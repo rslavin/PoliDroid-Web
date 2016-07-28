@@ -158,6 +158,8 @@ class AnalysisController extends Controller {
         $owl = AnalysisController::$owlFile;
         $mapping = AnalysisController::$mappingFile;
 
-        return exec("cd $pvRoot && java -jar $pvDetector $owl $mapping $policyFile $flowDroidOut");
+        exec("cd $pvRoot && java -jar $pvDetector $owl $mapping $policyFile $flowDroidOut", $out);
+
+        return explode("\n", $out);
     }
 }
