@@ -114,6 +114,8 @@ class AnalysisController extends Controller {
                         $consistency->results = $results;
                         if($results === "No violations detected")
                             $consistency->is_consistent = 1;
+                        if(!$results)
+                            $consistency->results = "An error occurred.";
                         $consistency->is_complete = 1;
                         $consistency->save();
                         \Mail::send('emails.pvResults', ['filename' => $apkFile->original_filename, 'results' => $consistency->results], function ($m) use ($consistency) {

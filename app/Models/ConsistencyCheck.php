@@ -18,7 +18,7 @@ class ConsistencyCheck extends Model
     }
 
     public function policyFile(){
-        return $this->belongsTo('App\Models\ApkFile');
+        return $this->belongsTo('App\Models\PolicyFile');
     }
     
 }
