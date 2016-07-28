@@ -160,6 +160,6 @@ class AnalysisController extends Controller {
 
         exec("cd $pvRoot && java -jar $pvDetector $owl $mapping $policyFile $flowDroidOut", $out);
 
-        return explode("\n", $out);
+        return implode("\n", $out);
     }
 }
