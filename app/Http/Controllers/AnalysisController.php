@@ -88,7 +88,7 @@ class AnalysisController extends Controller {
                 ->where('has_started_scan', '=', 1);
         })->get();
         if ($apkFiles) {
-            $path = ApkFile::getRootPath() . "out";
+            $path = ApkFile::getOutPath();
             $files = \File::files($path);
         } else
             return;
@@ -102,9 +102,10 @@ class AnalysisController extends Controller {
                 if (!strcmp($filename, $apkFile->filename)) {
                     $fp = fopen($path . "/". $filename, "r");
                     if(flock($fp, LOCK_EX)) { // check if the file is still open by flowdroid
-                        // TODO change this so that it calls PVDetector and saves the results to $consistency
                         $fileWithPath = "$path/$filename";
                         $consistency = $apkFile->consistencyCheck;
+                        // TODO change this so that it calls PVDetector and saves the results to $consistency
+                        // $results = AnalysisController::doPVDetect();
                         $consistency->results = file_get_contents($fileWithPath);
                         $consistency->is_complete = 1;
                         // TODO add consistent flag
