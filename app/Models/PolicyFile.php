@@ -17,7 +17,7 @@ class PolicyFile extends Model
     }
 
     public static $storageDriver = "local";
-    private static $storageLocation = "files/policies/";
+    private static $storageLocation = "/files/policies/";
 
     public static function getRootPath()
     {

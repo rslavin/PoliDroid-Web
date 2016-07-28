@@ -18,8 +18,8 @@ class ApkFile extends Model
     }
 
     public static $storageDriver = "local";
-    private static $storageLocation = "files/apks/";
-    private static $outLocation = "files/out/";
+    private static $storageLocation = "/files/apks/";
+    private static $outLocation = "/files/out/";
 
     public static function getRootPath()
     {
