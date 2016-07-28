@@ -131,7 +131,7 @@ class AnalysisController extends Controller {
      */
     public static function doJob(ConsistencyCheck $check) {
         $rootPath = ApkFile::getRootPath();
-        $outPath = ApkFile::$outLocation;
+        $outPath = ApkFile::getOutPath();
         $filename = $check->apkFile->filename;
 
         exec("cd " . AnalysisController::$flowdroidDir . " && java -Xms65536m -Xmx196608m  -cp " .

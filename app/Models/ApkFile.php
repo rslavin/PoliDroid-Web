@@ -18,13 +18,21 @@ class ApkFile extends Model
     }
 
     public static $storageDriver = "local";
-    public static $storageLocation = "/files/apks/";
-    public static $outLocation = "/files/out/";
+    private static $storageLocation = "files/apks/";
+    private static $outLocation = "files/out/";
 
     public static function getRootPath()
     {
         if (!strcmp(ApkFile::$storageDriver, "local")) {
             return \Config::get("filesystems.disks.local.root") . ApkFile::$storageLocation;
+        }
+        return "";
+    }
+
+    public static function getOutPath()
+    {
+        if (!strcmp(ApkFile::$storageDriver, "local")) {
+            return \Config::get("filesystems.disks.local.root") . ApkFile::$outLocation;
         }
         return "";
     }
