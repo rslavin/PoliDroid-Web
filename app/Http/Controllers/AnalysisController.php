@@ -94,11 +94,11 @@ class AnalysisController extends Controller {
         foreach ($apkFiles as $apkFile) {
             foreach ($files as $file) {
                 $fileInfo = pathinfo($file);
-                $filename =$fileInfo['filename'] . "." . $fileInfo['extension'];
+                $filename = "$fileInfo[filename].$fileInfo[extension]";
 
                 // find file
                 if (!strcmp($filename, $apkFile->filename)) { // TODO also check if the file is no longer open for writing
-                    $fp = fopen($path . "/". $filename);
+                    $fp = fopen($path . "/". $filename, "r");
                     if(flock($fp, LOCK_EX)) { // check if the file is still open by flowdroid
                         // TODO change this so that it calls PVDetector and saves the results to $consistency
                         $fileWithPath = "$path/$filename";
