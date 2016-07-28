@@ -131,12 +131,13 @@ class AnalysisController extends Controller {
      */
     public static function doJob(ConsistencyCheck $check) {
         $rootPath = ApkFile::getRootPath();
+        $outPath = ApkFile::$outLocation;
         $filename = $check->apkFile->filename;
 
         exec("cd " . AnalysisController::$flowdroidDir . " && java -Xms65536m -Xmx196608m  -cp " .
             "soot-trunk.jar:soot-infoflow.jar:soot-infoflow-android.jar:slf4j-api-1.7.5.jar:axml-2.0.jar " .
-            "soot.jimple.infoflow.android.TestApps.Test " . $rootPath . "/" . $filename . " " .
-            "android.jar --nostatic --aliasflowins --layoutmode none > " . $rootPath . "out/$filename 2>&1");
+            "soot.jimple.infoflow.android.TestApps.Test " . $rootPath . $filename . " " .
+            "android.jar --nostatic --aliasflowins --layoutmode none > " . $outPath . $filename . " 2>&1");
         $check->has_started_scan = 1;
         $check->save();
     }
