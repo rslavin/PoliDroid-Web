@@ -8,7 +8,6 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Yaml\Tests\A;
 
@@ -30,6 +29,7 @@ class AnalysisController extends Controller {
 
         $consistency = new ConsistencyCheck();
         $consistency->email = Input::get('email');
+        // TODO policy needs to be stored as a file because of PVDetector program
         $consistency->policy = Input::get('policy');
         $consistency->apk_file_id = $apk->id;
         $consistency->save();
@@ -126,14 +126,10 @@ class AnalysisController extends Controller {
         $rootPath = ApkFile::getRootPath();
         $filename = $check->apkFile->filename;
 
-        exec("java -Xms65536m -Xmx196608m  -cp " .
-            AnalysisController::$flowdroidDir . "soot-trunk.jar:soot-infoflow.jar:soot-infoflow-android.jar:slf4j-api-1.7.5.jar:axml-2.0.jar " .
-            AnalysisController::$flowdroidDir . "soot.jimple.infoflow.android.TestApps.Test " . $rootPath . "/" . $filename .
-            AnalysisController::$flowdroidDir . "android.jar --nostatic --aliasflowins --layoutmode none > " . $rootPath . "out/$filename 2>&1");
-        \Log::info("java -Xms65536m -Xmx196608m  -cp " .
-            AnalysisController::$flowdroidDir . "soot-trunk.jar:soot-infoflow.jar:soot-infoflow-android.jar:slf4j-api-1.7.5.jar:axml-2.0.jar " .
-            AnalysisController::$flowdroidDir . "soot.jimple.infoflow.android.TestApps.Test " . $rootPath . "/" . $filename .
-            AnalysisController::$flowdroidDir . "android.jar --nostatic --aliasflowins --layoutmode none > " . $rootPath . "out/$filename 2>&1");
+        exec("cd " . AnalysisController::$flowdroidDir . " && java -Xms65536m -Xmx196608m  -cp " .
+            "soot-trunk.jar:soot-infoflow.jar:soot-infoflow-android.jar:slf4j-api-1.7.5.jar:axml-2.0.jar " .
+            "soot.jimple.infoflow.android.TestApps.Test " . $rootPath . "/" . $filename .
+            "android.jar --nostatic --aliasflowins --layoutmode none > " . $rootPath . "out/$filename 2>&1");
         $check->has_started_scan = 1;
         $check->save();
     }
