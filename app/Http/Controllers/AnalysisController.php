@@ -97,6 +97,7 @@ class AnalysisController extends Controller {
 
                 // find file
                 if (!strcmp($filename, $apkFile->filename)) {
+                    // TODO change this so that it calls PVDetector and saves the results to $consistency
                     $fileWithPath = "$path/$filename";
                     $consistency = $apkFile->consistencyCheck;
                     $consistency->results = file_get_contents($fileWithPath);
@@ -128,7 +129,7 @@ class AnalysisController extends Controller {
 
         exec("cd " . AnalysisController::$flowdroidDir . " && java -Xms65536m -Xmx196608m  -cp " .
             "soot-trunk.jar:soot-infoflow.jar:soot-infoflow-android.jar:slf4j-api-1.7.5.jar:axml-2.0.jar " .
-            "soot.jimple.infoflow.android.TestApps.Test " . $rootPath . "/" . $filename .
+            "soot.jimple.infoflow.android.TestApps.Test " . $rootPath . "/" . $filename . " " .
             "android.jar --nostatic --aliasflowins --layoutmode none > " . $rootPath . "out/$filename 2>&1");
         $check->has_started_scan = 1;
         $check->save();
