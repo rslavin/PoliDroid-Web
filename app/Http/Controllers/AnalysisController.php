@@ -93,22 +93,26 @@ class AnalysisController extends Controller {
 
         foreach ($apkFiles as $apkFile) {
             foreach ($files as $file) {
-                $filename = pathinfo($file)['filename'];
+                $fileInfo = pathinfo($file);
+                $filename =$fileInfo['filename'] . "." . $fileInfo['extension'];
 
                 // find file
-                if (!strcmp($filename, $apkFile->filename)) {
-                    // TODO change this so that it calls PVDetector and saves the results to $consistency
-                    $fileWithPath = "$path/$filename";
-                    $consistency = $apkFile->consistencyCheck;
-                    $consistency->results = file_get_contents($fileWithPath);
-                    $consistency->is_complete = 1;
-                    // TODO add consistent flag
-                    $consistency->save();
-                    // TODO parse results
-                    \Mail::send('emails.pvResults', ['filename' => $apkFile->original_filename, 'results' => $consistency->results], function ($m) use ($consistency){
-                        $m->from('donotreply@polidroid.org', 'PoliDroid');
-                        $m->to($consistency->email)->subject('PVDetector Results');
-                    });
+                if (!strcmp($filename, $apkFile->filename)) { // TODO also check if the file is no longer open for writing
+                    $fp = fopen($path . "/". $filename);
+                    if(flock($fp, LOCK_EX)) { // check if the file is still open by flowdroid
+                        // TODO change this so that it calls PVDetector and saves the results to $consistency
+                        $fileWithPath = "$path/$filename";
+                        $consistency = $apkFile->consistencyCheck;
+                        $consistency->results = file_get_contents($fileWithPath);
+                        $consistency->is_complete = 1;
+                        // TODO add consistent flag
+                        $consistency->save();
+                        // TODO parse results
+                        \Mail::send('emails.pvResults', ['filename' => $apkFile->original_filename, 'results' => $consistency->results], function ($m) use ($consistency) {
+                            $m->from('donotreply@polidroid.org', 'PoliDroid');
+                            $m->to($consistency->email)->subject('PVDetector Results');
+                        });
+                    }
                     // remove the file
 //                  \File::delete($fileWithPath);
                     break;

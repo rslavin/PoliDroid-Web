@@ -32,7 +32,7 @@ class ApkFile extends Model
     {
 
         do {
-            $filename = uniqid() . ".jar";// . "." . $file->getClientOriginalExtension();
+            $filename = uniqid() . ".apk";// . "." . $file->getClientOriginalExtension();
         } while (\Storage::disk(ApkFile::$storageDriver)->exists($filename));
 
         $entry = ApkFile::create([
