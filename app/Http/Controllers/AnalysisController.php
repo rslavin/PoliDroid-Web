@@ -114,7 +114,7 @@ class AnalysisController extends Controller {
                         $consistency->results = $results;
                         if($results === "No violations detected")
                             $consistency->is_consistent = 1;
-                        if(!$results)
+                        if(!$results || strpos($results, 'OpenJDK') !== false)
                             $consistency->results = "An error occurred.";
                         $consistency->is_complete = 1;
                         $consistency->save();
