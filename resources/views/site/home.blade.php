@@ -14,6 +14,10 @@
                 visit our <a href="publications">publications</a> page.
             </p>
             <p>
+                <strong>If you want to use these tools but are not sure how, use the tutorials to the right to learn how you, as either
+                    a developer or a policy checker, can get the necessary files to check an app for consistency.</strong>
+            </p>
+            <p>
                 PoliDroid is a collaborative work between the University of Texas at San Antonio,
                 the University of Texas at Dallas, and Carnegie Mellon University.
             </p>

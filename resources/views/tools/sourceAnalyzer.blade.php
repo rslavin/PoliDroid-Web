@@ -12,17 +12,8 @@
 
         <form>
             <h4>Source Code</h4>
-            <ul class="nav nav-tabs">
-                <li><a data-toggle="tab" href="#class1">Class 1</a></li>
-                <li><a data-toggle="tab" href="#class2">Class 2</a></li>
-            </ul>
-            <div class="tab-content">
-                <div id="class1" class="tab-pane fade in active" style="font-size: smaller">
-                    <textarea id="code1" name="code1"></textarea>
-                </div>
-                <div id="class2" class="tab-pane fade in active" style="font-size: smaller">
-                    <textarea id="code2" name="code2"></textarea>
-                </div>
+            <div id="class1" class="tab-pane fade in active" style="font-size: smaller">
+                <textarea id="code1" name="code1"></textarea>
             </div>
 
 
@@ -44,15 +35,6 @@
         window.onload = function () {
             var te1 = document.getElementById("code1");
             window.editor = CodeMirror.fromTextArea(te1, {
-                mode: "text/x-java",
-                lineNumbers: true,
-                lineWrapping: true,
-                matchBrackets: true,
-                theme: "mbo",
-            });
-
-            var te2 = document.getElementById("code2");
-            window.editor = CodeMirror.fromTextArea(te2, {
                 mode: "text/x-java",
                 lineNumbers: true,
                 lineWrapping: true,

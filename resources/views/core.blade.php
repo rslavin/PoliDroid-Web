@@ -40,6 +40,7 @@
             <a class="blog-nav-item {{isset($title) && $title == 'PVDetector' ? 'active' : ''}}" href="/pvdetector">PVDetector</a>
             <a class="blog-nav-item {{isset($title) && $title == 'Source Code Analyzer' ? 'active' : ''}}" href="/source-analyzer">Source Code Analyzer</a>
             <a class="blog-nav-item {{isset($title) && $title == 'Publications' ? 'active' : ''}}" href="/publications">Publications</a>
+            <a class="blog-nav-item {{isset($title) && $title == 'Tutorial' ? 'active' : ''}}" href="/tutorials">Tutorials</a>
         </nav>
     </div>
 </div>
@@ -77,6 +78,13 @@
                 <ol class="list-unstyled">
                     <li><a href="/pvdetector">PVDetector</a></li>
                     <li><a href="/source-analyzer">Source Code Analyzer<a></li>
+                </ol>
+            </div>
+            <div class="sidebar-module">
+                <h4>Tutorials</h4>
+                <ol class="list-unstyled">
+                    <li><a href="/tutorials/developer">Developer Instructions</a></li>
+                    <li><a href="/tutorials/verifier">Verifier Instructions<a></li>
                 </ol>
             </div>
             <div class="sidebar-module">

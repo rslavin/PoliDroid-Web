@@ -20,4 +20,18 @@ class HomeController extends Controller {
     public function getPublications(){
         return view('site.publications')->with('title', 'Publications');
     }
+
+    public function getTutorial($type = ''){
+        $data['title'] = 'Tutorial';
+        switch($type){
+            case 'developer':
+                return view('tutorials.developer', $data);
+            case 'verifier':
+                return view('tutorials.verifier', $data);
+            case '':
+                return view('tutorials.index', $data);
+            default:
+                abort(404);
+        }
+    }
 }

@@ -7,6 +7,11 @@
             to check for consistency. Once the analysis is complete, you will receive an email with the results.</p>
         <hr>
 
+        <div class="alert alert-success">
+            <strong>Not sure how to use this form?</strong> Use the tutorials to the right to learn how you, as either
+            a developer or a policy checker, can get the necessary files to check an app for consistency.
+        </div>
+
         @if (count($errors) > 0)
             <div class="alert alert-danger">
                 <strong>Whoops!</strong> There were some problems with your input.
