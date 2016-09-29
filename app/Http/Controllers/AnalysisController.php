@@ -18,6 +18,7 @@ class AnalysisController extends Controller {
     public static $pvJar = "PrivacyViolationDetection.jar";
     public static $owlFile = "ontology.owl";
     public static $mappingFile = "mappings.csv";
+    public static $inputFileDir = "/input";
     public static $sampleSource = "/* Sample Android Code */
 package codepath.apps.demointroandroid;
 
@@ -37,6 +38,7 @@ public class ActionBarMenuActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_action_bar_menu);
 		getActionBar().setTitle(\"Click an Icon\");
+		getAltitude();
 	}
 
 	@Override
@@ -200,6 +202,7 @@ public class ActionBarMenuActivity extends Activity {
     public function getSourceAnalyzer() {
         $data['title'] = 'Source Code Analyzer';
         $data['sampleCode'] = AnalysisController::$sampleSource;
+        $data['mappings'] = self::getMappingsAsJson();
         return view('tools.sourceAnalyzer', $data);
     }
 
@@ -207,10 +210,56 @@ public class ActionBarMenuActivity extends Activity {
         $pvRoot = AnalysisController::$pvDir;
         $pvDetector = AnalysisController::$pvJar;
         $owl = AnalysisController::$owlFile;
-        $mapping = AnalysisController::$mappingFile;
+//        $mapping = AnalysisController::$mappingFile;
+        $mapping = public_path() . "/" . self::$inputFileDir . "/" . AnalysisController::$mappingFile;
 
         exec("cd $pvRoot && java -jar $pvDetector $owl $mapping $policyFile $flowDroidOut", $out);
 
         return implode("\n", $out);
+    }
+
+    private static function getMappingsAsJson() {
+        return json_encode(self::parseMappings(public_path() . "/" . self::$inputFileDir . "/" . AnalysisController::$mappingFile));
+
+    }
+
+    private static function parseMappings($file, $delimiter = ",") {
+
+        if (($handle = fopen($file, 'r')) !== FALSE) {
+            $i = 0;
+            while (($lineArray = fgetcsv($handle, 4000, $delimiter, '"')) !== FALSE) {
+                $arr[$i][0] = $lineArray[0];
+                preg_match('/.+\s([^\s]+)\(/', $lineArray[1], $matches);
+                $arr[$i][1] = $matches[1];
+                $i++;
+            }
+            fclose($handle);
+        }
+
+        // combine
+        if (isset($arr)) {
+            $combined = [];
+            foreach ($arr as $pair) {
+                if (array_key_exists($pair[0], $combined)) {
+                    $combined[$pair[0]] = array_merge($combined[$pair[0]], [$pair[1]]);
+                } else {
+                    $combined[$pair[0]] = [$pair[1]];
+                }
+            }
+        }
+
+        // add labels
+        if (isset($combined)) {
+            $final = [];
+            $i = 0;
+            foreach ($combined as $phrase => $methods) {
+                $final[$i]['phrase'] = $phrase;
+                $final[$i]['methods'] = $methods;
+                $i++;
+            }
+
+            return $final;
+        }
+        return null;
     }
 }
