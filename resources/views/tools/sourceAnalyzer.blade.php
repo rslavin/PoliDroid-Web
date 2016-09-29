@@ -13,7 +13,7 @@
         <form>
             <h4>Source Code</h4>
             <div id="class1" class="tab-pane fade in active" style="font-size: smaller">
-                <textarea id="code1" name="code1"></textarea>
+                <textarea id="code1" name="code1">{{isset($sampleCode) ? $sampleCode : ""}}</textarea>
             </div>
 
 

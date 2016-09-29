@@ -1,7 +1,7 @@
 @extends('core')
 @section('content')
     <div class="blog-post">
-        <h2>Policy Verifier Tutorial</h2>
+        <h2>Policy Auditor Tutorial</h2>
         <p>
             The PoliDroid suite can be used by those who want to verify an existing app with an existing policy. This means
             that end-users, policy makers, and law makers can use the tools to check for consistency. It is important, however, to note
@@ -11,7 +11,7 @@
         </p>
         <hr />
 
-        <h3>Application Code</h3>
+        <h3>What is Application Code?</h3>
         <p>
             As a non-developer, you can use an app downloaded to your phone from app repositories such as the
             <a href="http://play.google.com">Google Play store</a>. The file itself can either be directly downloaded

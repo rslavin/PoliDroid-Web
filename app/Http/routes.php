@@ -17,3 +17,6 @@ Route::post('pvdetector', 'AnalysisController@postconsistencyForm');
 Route::get('source-analyzer', 'AnalysisController@getSourceAnalyzer');
 Route::get('publications', 'HomeController@getPublications');
 Route::get('tutorials/{type?}', 'HomeController@getTutorial');
+Route::get("privacy", function(){
+    return view('site.privacy');
+});

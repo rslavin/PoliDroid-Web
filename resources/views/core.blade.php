@@ -47,7 +47,10 @@
 
 <div class="container">
 
+
     <div class="blog-header">
+        @yield('top')
+
         <h1 class="blog-title">PoliDroid</h1>
         <p class="lead blog-description">An Android privacy policy compliance tool suite.</p>
     </div>
@@ -84,7 +87,7 @@
                 <h4>Tutorials</h4>
                 <ol class="list-unstyled">
                     <li><a href="/tutorials/developer">Developer Instructions</a></li>
-                    <li><a href="/tutorials/verifier">Verifier Instructions<a></li>
+                    <li><a href="/tutorials/auditor">Auditor Instructions</a></li>
                 </ol>
             </div>
             <div class="sidebar-module">
@@ -101,7 +104,7 @@
 </div><!-- /.container -->
 
 <footer class="blog-footer">
-    <p>&copy; {{date("Y")}} UTSA Software Engineering and Formal Methods Group. Built by <a href="https://twitter.com/rockyslavin">@RockySlavin</a>.</p>
+    <p>&copy; {{date("Y")}} UTSA Software Engineering and Formal Methods Group | <a href="/privacy">Privacy Policy</a> | Built by <a href="https://twitter.com/rockyslavin">@RockySlavin</a>.</p>
     <p>
         <a href="#">Back to top</a>
     </p>

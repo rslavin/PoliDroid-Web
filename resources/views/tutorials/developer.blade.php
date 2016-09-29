@@ -13,7 +13,7 @@
             and end-user confidence.</p>
         <hr />
 
-        <h3>Privacy Policy</h3>
+        <h3>What is a Privacy Policy?</h3>
         <p>
             A privacy policy is a natural language legal document disclosing the private information that is accessed, used, and/or
             shared. This document is used to fulfil legal obligations of the app publisher to its clients. Often, it is

@@ -18,6 +18,53 @@ class AnalysisController extends Controller {
     public static $pvJar = "PrivacyViolationDetection.jar";
     public static $owlFile = "ontology.owl";
     public static $mappingFile = "mappings.csv";
+    public static $sampleSource = "/* Sample Android Code */
+package codepath.apps.demointroandroid;
+
+import android.os.Bundle;
+import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.Intent;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.Toast;
+
+public class ActionBarMenuActivity extends Activity {
+
+	@SuppressLint(\"NewApi\")
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_action_bar_menu);
+		getActionBar().setTitle(\"Click an Icon\");
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.activity_action_bar_menu, menu);
+		return true;
+	}
+	
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+	  switch (item.getItemId()) {
+	  case R.id.menu_toast:
+		Toast.makeText(this, \"Toasted\", Toast.LENGTH_SHORT).show();
+		break;
+	  case R.id.menu_launch:
+		Intent i = new Intent(this, SimpleBundleDemoActivity.class);
+		startActivity(i);
+		break;
+	  default:
+		break;
+	  }
+	  return true;
+	}
+	
+
+}";
 
     public function getConsistencyForm() {
         return view('tools.pvDetectorForm')->with('title', 'PVDetector');
@@ -112,9 +159,9 @@ class AnalysisController extends Controller {
                         $results = AnalysisController::pvDetect($consistency->policyFile->getPath(), ApkFile::getOutPath() . $consistency->apkFile->filename);
 //                        $consistency->results = file_get_contents($fileWithPath);
                         $consistency->results = $results;
-                        if($results === "No violations detected")
+                        if ($results === "No violations detected")
                             $consistency->is_consistent = 1;
-                        if(!$results || strpos($results, 'OpenJDK') !== false)
+                        if (!$results || strpos($results, 'OpenJDK') !== false)
                             $consistency->results = "An error occurred.";
                         $consistency->is_complete = 1;
                         $consistency->save();
@@ -151,7 +198,9 @@ class AnalysisController extends Controller {
     }
 
     public function getSourceAnalyzer() {
-        return view('tools.sourceAnalyzer')->with('title', 'Source Code Analyzer');
+        $data['title'] = 'Source Code Analyzer';
+        $data['sampleCode'] = AnalysisController::$sampleSource;
+        return view('tools.sourceAnalyzer', $data);
     }
 
     private static function pvDetect($policyFile, $flowDroidOut) {

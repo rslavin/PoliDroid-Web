@@ -26,8 +26,8 @@ class HomeController extends Controller {
         switch($type){
             case 'developer':
                 return view('tutorials.developer', $data);
-            case 'verifier':
-                return view('tutorials.verifier', $data);
+            case 'auditor':
+                return view('tutorials.auditor', $data);
             case '':
                 return view('tutorials.index', $data);
             default:

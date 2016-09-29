@@ -16,7 +16,7 @@
                     <a href="/tutorials/developer">Developer</a> - Application code writer.
                 </li>
                 <li>
-                    <a href="/tutorials/verifier">Verifier</a> - Non-developer verifying app they did not write.
+                    <a href="/tutorials/auditor">Auditor</a> - Non-developer verifying app they did not write.
                 </li>
             </ul>
 

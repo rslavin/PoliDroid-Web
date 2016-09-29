@@ -1,4 +1,17 @@
 @extends('core')
+@section('top')
+    <div class="alert alert-success">
+        <div class="row">
+            <div class="col-md-6" >
+                <a href="/tutorials/auditor" class="btn btn-info btn-block">Click here if you are an auditor</a>
+            </div>
+            <div class="hidden-lg hidden-md hidden-sm">&nbsp;</div>
+            <div class="col-md-6">
+                <a href="/tutorials/developer" class="btn btn-info btn-block">Click here if you are a developer</a>
+            </div>
+        </div>
+    </div>
+@stop()
 @section('content')
     <div class="blog-post">
 
@@ -14,8 +27,10 @@
                 visit our <a href="publications">publications</a> page.
             </p>
             <p>
-                <strong>If you want to use these tools but are not sure how, use the tutorials to the right to learn how you, as either
-                    a developer or a policy checker, can get the necessary files to check an app for consistency.</strong>
+                <strong>If you want to use these tools but are not sure how, use the tutorials to the right to learn how
+                    you, as either
+                    a developer or a policy checker, can get the necessary files to check an app for
+                    consistency.</strong>
             </p>
             <p>
                 PoliDroid is a collaborative work between the University of Texas at San Antonio,
