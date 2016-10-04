@@ -19,6 +19,8 @@ class AnalysisController extends Controller {
     public static $owlFile = "ontology.owl";
     public static $mappingFile = "mappings.csv";
     public static $inputFileDir = "/input";
+
+    public static $samplePolicy = "We do not collect any of your personal information.";
     public static $sampleSource = "/* Sample Android Code */
 package codepath.apps.demointroandroid;
 
@@ -202,6 +204,7 @@ public class ActionBarMenuActivity extends Activity {
     public function getSourceAnalyzer() {
         $data['title'] = 'Source Code Analyzer';
         $data['sampleCode'] = AnalysisController::$sampleSource;
+        $data['samplePolicy'] = AnalysisController::$samplePolicy;
         $data['mappings'] = self::getMappingsAsJson();
         return view('tools.sourceAnalyzer', $data);
     }
@@ -223,7 +226,12 @@ public class ActionBarMenuActivity extends Activity {
 
     }
 
-    private static function parseMappings($file, $delimiter = ",") {
+    /**
+     * @param $file
+     * @param string $delimiter
+     * @return array|null Mapping of format phrase => methods
+     */
+    private static function parseMappingsOld($file, $delimiter = ",") {
 
         if (($handle = fopen($file, 'r')) !== FALSE) {
             $i = 0;
@@ -255,6 +263,51 @@ public class ActionBarMenuActivity extends Activity {
             foreach ($combined as $phrase => $methods) {
                 $final[$i]['phrase'] = $phrase;
                 $final[$i]['methods'] = $methods;
+                $i++;
+            }
+
+            return $final;
+        }
+        return null;
+    }
+
+    /**
+     * @param $file
+     * @param string $delimiter
+     * @return array|null Mapping of form method => phrases
+     */
+    private static function parseMappings($file, $delimiter = ",") {
+
+        if (($handle = fopen($file, 'r')) !== FALSE) {
+            $i = 0;
+            while (($lineArray = fgetcsv($handle, 4000, $delimiter, '"')) !== FALSE) {
+                $arr[$i][0] = $lineArray[0];
+                preg_match('/.+\s([^\s]+)\(/', $lineArray[1], $matches);
+                $arr[$i][1] = $matches[1];
+                $i++;
+            }
+            fclose($handle);
+        }
+
+        // combine
+        if (isset($arr)) {
+            $combined = [];
+            foreach ($arr as $pair) {
+                if (array_key_exists($pair[1], $combined)) {
+                    $combined[$pair[1]] = array_merge($combined[$pair[1]], [$pair[0]]);
+                } else {
+                    $combined[$pair[1]] = [$pair[0]];
+                }
+            }
+        }
+
+        // add labels
+        if (isset($combined)) {
+            $final = [];
+            $i = 0;
+            foreach ($combined as $method => $phrases) {
+                $final[$i]['method'] = $method;
+                $final[$i]['phrases'] = $phrases;
                 $i++;
             }
 

@@ -18,13 +18,18 @@
 
             <br/>
             <h4>Privacy Policy</h4>
-            <textarea id="policy" rows="10" cols="70" id="policy" name="policy"
-                      placeholder="Paste your policy here."></textarea>
+            <textarea id="policy" rows="10" cols="66" id="policy" name="policy"
+                      placeholder="Paste your policy here.">{{isset($samplePolicy) ? $samplePolicy : ""}}</textarea>
             <div id="violations" class="alert alert-danger" hidden>
-                <strong>Potential Violations Found</strong>
+                <strong>Potential Violations Detected</strong>
                 <ul id="violations-points">
-
                 </ul>
+            </div>
+            <div id="no-violations" class="alert alert-success" hidden>
+                <strong>No Violations Detected</strong>
+            </div>
+            <div>
+                <button type="button" id="analyze" class="btn btn-block btn-info">Analyze</button>
             </div>
         </form>
 
@@ -51,22 +56,39 @@
     </script>
 
     <script>
+        function resetPage(){
+            $("#no-violations").hide();
+            $("#violations").hide();
+            $("#violations-points").empty();
+        }
+        function analyzeCode() {
+            resetPage();
+            var mappings = '{!! $mappings !!}';
+            $.each(JSON.parse(mappings), function (key, data) {
+                // if it doesn't exist, look for violations
+                if ($("#code1").val().indexOf(data.method) > -1) {
+                    var violation = true;
+                    $.each(data.phrases, function (key, phrase) {
+                        if ($("#policy").val().indexOf(phrase) > -1) {
+                            violation = false;
+                            return false;
+                        }
+                    });
+                    if (violation) {
+                        // post it
+                        $("#violations").show();
+                        $("#violations-points").append("<li>" + data.method + "() used. Consider including one of the following phrases: <strong>\"" +
+                                data.phrases + "\"</strong> as a potentially collected data to the policy.</li>");
+                    }else
+                        $("#no-violations").show();
+                }
+            });
+        }
+
         $(document).ready(function () {
-            $("#policy").on("input", function () {
-                var mappings = '{!! $mappings !!}';
-                $.each(JSON.parse(mappings), function (key, data) {
-                    if ($("#policy").val().indexOf(data.phrase) == -1) {
-                        $.each(data.methods, function (key, method) {
-                            if ($("#code1").val().indexOf(method) > -1) {
-                                $("#violations").show();
-                                if ($("#violations").text().indexOf(method) == -1)
-                                    $("#violations-points").append("<li>" + method + "() used. Consider including the phrase <strong>\"" + data.phrase + "\"</strong> as a potentially collected datum to the policy.</li>");
-                            }
-                        })
-                    }
-                });
-            })
-        })
+            $("#analyze").click(analyzeCode);
+        });
+
 
     </script>
     @endpush
