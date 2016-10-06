@@ -1,17 +1,5 @@
 @extends('core')
-@section('top')
-    <div class="alert alert-success">
-        <div class="row">
-            <div class="col-md-6" >
-                <a href="/tutorials/auditor" class="btn btn-info btn-block">Click here if you are an auditor</a>
-            </div>
-            <div class="hidden-lg hidden-md hidden-sm">&nbsp;</div>
-            <div class="col-md-6">
-                <a href="/tutorials/developer" class="btn btn-info btn-block">Click here if you are a developer</a>
-            </div>
-        </div>
-    </div>
-@stop()
+
 @section('content')
     <div class="blog-post">
 

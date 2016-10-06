@@ -50,6 +50,15 @@
 
     <div class="blog-header">
         @yield('top')
+            <div class="row">
+                <div class="col-md-4 col-md-offset-2" >
+                    <a href="/tutorials/auditor" class="btn btn-warning btn-lg btn-block">For Auditors</a>
+                </div>
+                <div class="hidden-lg hidden-md hidden-sm">&nbsp;</div>
+                <div class="col-md-4">
+                    <a href="/tutorials/developer" class="btn btn-success btn-lg btn-block">For Developers</a>
+                </div>
+            </div>
 
         <h1 class="blog-title">PoliDroid</h1>
         <p class="lead blog-description">An Android privacy policy compliance tool suite.</p>
