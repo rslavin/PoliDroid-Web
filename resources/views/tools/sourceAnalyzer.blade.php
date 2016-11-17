@@ -7,6 +7,9 @@
             into the privacy policy box at the bottom. PoliDroid will analyze your code and privacy policy
             and display potential inconsistencies at the bottom of the page.
         </p>
+        <p>
+            For a more advanced version of this tool, consider <a href="plugin">PoliDroid-AS</a>, our Android Studio Plugin.
+        </p>
 
         <hr/>
 

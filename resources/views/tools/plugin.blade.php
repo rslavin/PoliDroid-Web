@@ -4,7 +4,8 @@
         <h2>Polidroid-AS</h2>
 
         <p>Polidroid-AS is an Android Studio plugin which helps developers to create and align privacy policies for
-            their source code. The video below describes its usage and features.</p>
+            their source code. The video below describes its usage and features. A simplified web-based version of
+        this tool is available <a href="source-analyzer">here</a>.</p>
         <hr>
         <link href="{{ asset('/polidroidvideo/polidroid-tutorial_embed.css') }}" rel="stylesheet">
 
