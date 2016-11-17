@@ -21,6 +21,10 @@ class HomeController extends Controller {
         return view('site.publications')->with('title', 'Publications');
     }
 
+    public function getPlugin(){
+        return view('tools.plugin')->with('title', 'PoliDroid-AS');
+    }
+
     public function getTutorial($type = ''){
         $data['title'] = 'Tutorial';
         switch($type){

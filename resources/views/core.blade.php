@@ -39,6 +39,7 @@
             <a class="blog-nav-item {{isset($title) && $title == 'Home' ? 'active' : ''}}" href="/">Home</a>
             <a class="blog-nav-item {{isset($title) && $title == 'PVDetector' ? 'active' : ''}}" href="/pvdetector">PVDetector</a>
             <a class="blog-nav-item {{isset($title) && $title == 'Source Code Analyzer' ? 'active' : ''}}" href="/source-analyzer">Source Code Analyzer</a>
+            <a class="blog-nav-item {{isset($title) && $title == 'PoliDroid-AS' ? 'active' : ''}}" href="/plugin">Android Studio Plugin</a>
             <a class="blog-nav-item {{isset($title) && $title == 'Publications' ? 'active' : ''}}" href="/publications">Publications</a>
             <a class="blog-nav-item {{isset($title) && $title == 'Tutorial' ? 'active' : ''}}" href="/tutorials">Tutorials</a>
         </nav>
@@ -89,7 +90,8 @@
                 <h4>Tools</h4>
                 <ol class="list-unstyled">
                     <li><a href="/pvdetector">PVDetector</a></li>
-                    <li><a href="/source-analyzer">Source Code Analyzer<a></li>
+                    <li><a href="/source-analyzer">Source Code Analyzer</a></li>
+                    <li><a href="/plugin">Android Studio Plugin</a></li>
                 </ol>
             </div>
             <div class="sidebar-module">
