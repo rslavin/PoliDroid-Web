@@ -11,12 +11,13 @@
 
         <iframe class="tscplayer_inline" id="embeddedSmartPlayerInstance" src="/polidroidvideo/polidroid-tutorial_player.html?embedIFrameId=embeddedSmartPlayerInstance" scrolling="no" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
 
-        <h3>Download</h3>
+        {{--<h3>Download</h3>
         <ul>
             <li><a href="/downloads/PoliDroid-AS.zip">Plugin</a></li>
             <li><a href="/downloads/mappings.csv">Mappings File</a></li>
             <li><a href="/downloads/ontology.owl">Ontology File</a></li>
         </ul>
+        --}}
     </div>
 
 @stop()
