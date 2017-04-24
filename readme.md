@@ -1,4 +1,6 @@
-# PoliDroid Web-Based Consistency Tool
+PoliDroid Web-Based Consistency Tool
+=======
+PoliDroid-Web is a web application serving the PoliDroid suite of Android privacy policy consistency tools.
 
 Installation Notes
 =======
