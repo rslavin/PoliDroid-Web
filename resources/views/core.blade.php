@@ -41,6 +41,7 @@
             <a class="blog-nav-item {{isset($title) && $title == 'Source Code Analyzer' ? 'active' : ''}}" href="/source-analyzer">Source Code Analyzer</a>
             <a class="blog-nav-item {{isset($title) && $title == 'PoliDroid-AS' ? 'active' : ''}}" href="/plugin">Android Studio Plugin</a>
             <a class="blog-nav-item {{isset($title) && $title == 'Publications' ? 'active' : ''}}" href="/publications">Publications</a>
+            <a class="blog-nav-item {{isset($title) && $title == 'Studies' ? 'active' : ''}}" href="/studies">Studies</a>
             <a class="blog-nav-item {{isset($title) && $title == 'Tutorial' ? 'active' : ''}}" href="/tutorials">Tutorials</a>
         </nav>
     </div>
