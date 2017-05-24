@@ -27,7 +27,7 @@
             as potential violations and are included in PVDetector's output.
         </p>
         <p>
-            If you do not have a compiled APK, the <strong><a href="source-analyzer">Source Code Analyzer</a></strong> takes source
+            If you do not have a compiled APK, the <strong><a href="/source-analyzer">Source Code Analyzer</a></strong> takes source
             code as an input and automatically cans, in your browser, for potential violations. This method does <i>not</i>
             analyze the code to see where the data flows. Instead, it is only able to annotate method invocations that
             are not represented within your code. The Source Code Analyzer suggests phrases to include in your policy to
